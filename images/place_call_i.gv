@@ -1,0 +1,27 @@
+digraph G {
+
+	subgraph cluster {
+		node [shape=doublecircle]; "End";
+		node [shape=point]; qi
+		node [shape=ellipse];
+		node [style=filled];
+		qi -> "Check rotary-dial\n for rising edge" [label = ""];
+		"Check rotary-dial\n for rising edge" -> "Check rotary-dial\n for rising edge" [label = "Signal High"];
+		"Check rotary-dial\n for rising edge" -> "Wait for\n end bouncing\n rising edge" [label = "Signal Low"]; 
+		"Wait for\n end bouncing\n rising edge" -> "Check rotary-dial\n for falling edge" [label = ""];
+		"Check rotary-dial\n for falling edge" -> "Check rotary-dial\n for falling edge" [label = "Signal Low"];
+		"Check rotary-dial\n for falling edge" -> "Wait for\n end bouncing\n falling edge" [label = "Signal Low"];
+		"Wait for\n end bouncing\n falling edge" -> "increment dialed\n number" [label = ""];
+		"increment dialed\n number" -> "Check rotary-dial\n for falling edge" [label = "Receiver\n off hook\n &and;\n rotary-dial in use"];
+		"increment dialed\n number" -> "Put dialed\n number into\n number string" [label = "rotary-dial\n in EndPos"];
+		"Put dialed\n number into\n number string" -> "..." [label = ""];
+
+		"Check rotary-dial\n for rising edge" -> "Put dialed\n number into\n number string" [label = "rotary-dial in\n home position"];
+		"Check rotary-dial\n for falling edge" -> "Put dialed\n number into\n number string" [label = "rotary-dial in\n home position"];
+		"..." -> "End" [label = ""]; 
+				
+		
+		label = "debounce place_call";
+		color = black
+	}
+}

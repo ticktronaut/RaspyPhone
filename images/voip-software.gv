@@ -1,0 +1,15 @@
+digraph G {
+
+	subgraph cluster {
+		node [shape = point ]; qi
+		node [shape = ellipse];
+		node [style=filled];
+		qi -> "eingehenden\n Anruf prüfen\n (incoming_call)"
+		"eingehenden\n Anruf prüfen\n (incoming_call)" -> "Anruf\n platzieren\n (place_call)" [label = "Hörer\n abgenommen"];
+		"eingehenden\n Anruf prüfen\n (incoming_call)" -> "eingehenden\n Anruf prüfen\n (incoming_call)" [label = "Hörer\n aufgelegt"];
+		"Anruf\n platzieren\n (place_call)" -> "eingehenden\n Anruf prüfen\n (incoming_call)" [label = "Hörer\n aufgelegt"];
+		"Anruf\n platzieren\n (place_call)" -> "Anruf\n platzieren\n (place_call)" [label = "Hörer\n abgenommen"];
+		label = "voip-software";
+		color = black
+	}
+}

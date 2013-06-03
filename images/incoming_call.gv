@@ -1,0 +1,18 @@
+digraph G {
+
+	subgraph cluster {
+		node [shape=doublecircle]; "End";
+		node [shape=point]; qi
+		node [shape=ellipse];
+		node [style=filled];
+		qi -> "Check\n Status\n call" [label = ""];
+		"Check\n Status\n call" -> "Answer call\n (linphonecsh\n generic answer)" [label = "Incoming\n call\n &and;\n Receiver\n off hook"];
+		"Answer call\n (linphonecsh\n generic answer)" -> "End call\n (linphonecsh\n hangup)" [label = "Receiver\n hung up"];
+		"Answer call\n (linphonecsh\n generic answer)" -> "phoning" [label = "Receiver\n off hook"];
+		"phoning" -> "phoning" [label = "Receiver\n off hook"];
+		"phoning" -> "End call\n (linphonecsh\n hangup)" [label = "Receiver\n hung up"];
+		"End call\n (linphonecsh\n hangup)" -> "End" [label = ""];
+		label = "voip-software";
+		color = black
+	}
+}

@@ -1,0 +1,27 @@
+digraph G {
+
+	subgraph cluster {
+		node [shape=doublecircle]; "End";
+		node [shape=point]; qi
+		node [shape=ellipse];
+		node [style=filled];
+		qi -> "Detect\nedge change on\n rotary switch" [label = "receiver\n off hook"];
+		"Detect\nedge change on\n rotary switch" -> "increment\n dialed number" [label = ""];
+		"increment\n dialed number" -> "Detect\nedge change on\n rotary switch" [label = "Receiver\noff hook\n &and;\n rotary dial in\n finger stop"];
+		"increment\n dialed number" -> "Put dialed\nnumber into\n number string" [label = "rotary dial in\n home position"];
+		"Put dialed\nnumber into\n number string" -> "Start\n timer" [label = ""];
+		"Start\n timer" -> "Nummer anrufen\n (linphonecsh\n dial ...)" [label = "after\n4 sec"]; 
+		"Start\n timer" -> "Detect\nedge change on\n rotary switch" [label = "rotary dial in\n finger stop"]
+		"Nummer anrufen\n (linphonecsh\n dial ...)" -> "phoning" [label = ""];
+		"phoning" -> "phoning" [label = "Receiver\n off hook"];
+		"phoning" -> "End call\n (linphonecsh\n hangup)" [label = "Receiver\n hung up"];
+		"End call\n (linphonecsh\n hangup)" -> "End" [label = ""];
+
+		"Detect\nedge change on\n rotary switch" -> "Put dialed\nnumber into\n number string" [label = "rotary dial in\n home position"];
+		"Start\n timer" -> "End" [label = "Receiver\n hung up\n &or;\n rotary dial in\n home position\n &or;\n length number = 0"]; 
+				
+		
+		label = "place_call";
+		color = black
+	}
+}

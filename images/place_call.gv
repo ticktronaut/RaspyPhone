@@ -1,0 +1,33 @@
+digraph G {
+
+	subgraph cluster {
+		node [shape=doublecircle]; "End";
+		node [shape=point]; qi
+		node [shape=ellipse];
+		node [style=filled];
+		qi -> "Check rotary-dial\n for rising edge" [label = ""];
+		"Impulsgeber auf\n High Flanke\n abfragen" -> "Impulsgeber auf\n High Flanke\n abfragen" [label = "Impuls High"];
+		"Impulsgeber auf\n High Flanke\n abfragen" -> "Warten auf\n Ende Prellen\n steigende Flanke" [label = "Impuls Low"]; 
+		"Warten auf\n Ende Prellen\n steigende Flanke" -> "Impulsgeber auf\n Low Flanke\n abfragen" [label = ""];
+		"Impulsgeber auf\n Low Flanke\n abfragen" -> "Impulsgeber auf\n Low Flanke\n abfragen" [label = "Impuls Low"];
+		"Impulsgeber auf\n Low Flanke\n abfragen" -> "Warten auf\n Ende Prellen\n fallende Flanke" [label = "Impuls High"];
+		"Warten auf\n Ende Prellen\n fallende Flanke" -> "Ziffer um\n Eins\n inkrementieren" [label = ""];
+		"Ziffer um\n Eins\n inkrementieren" -> "Impulsgeber auf\n High Flanke\n abfragen" [label = "Hörer ab-\ngenommen\n &and;\n Wählscheibe\n aufgezogen"];
+		"Ziffer um\n Eins\n inkrementieren" -> "Ziffer in Telefon-\nnummer String\n aufnehmen" [label = "Wählscheibe\n in EndPos"];
+		"Ziffer in Telefon-\nnummer String\n aufnehmen" -> "Timer\n starten" [label = ""];
+		"Timer\n starten" -> "Nummer anrufen\n (linphonecsh\n dial ...)" [label = "4 sec\n vergangen"]; 
+		"Timer\n starten" -> "Impulsgeber auf\n High Flanke\n abfragen" [label = "Wählscheibe\n aufgezogen"]
+		"Nummer anrufen\n (linphonecsh\n dial ...)" -> "Telefonieren" [label = ""];
+		"Telefonieren" -> "Telefonieren" [label = "Hörer\n abgenommen"];
+		"Telefonieren" -> "Anruf\n beenden\n (linphonecsh\n hangup)" [label = "Hörer\n aufgelegt"];
+		"Anruf\n beenden\n (linphonecsh\n hangup)" -> "End" [label = ""];
+
+		"Impulsgeber auf\n High Flanke\n abfragen" -> "Ziffer in Telefon-\nnummer String\n aufnehmen" [label = "Wählscheibe\n in EndPos"];
+		"Impulsgeber auf\n Low Flanke\n abfragen" -> "Ziffer in Telefon-\nnummer String\n aufnehmen" [label = "Wählscheibe\n in EndPos"];
+		"Timer\n starten" -> "End" [label = "Hörer\n aufgelegt\n &or;\n Wählscheibe\n in EndPos\n &or;\n Nummern-\nlänge = 0"]; 
+				
+		
+		label = "place_call";
+		color = black
+	}
+}
